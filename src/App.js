@@ -13,7 +13,7 @@ import IERC20 from "./components/contracts/IERC20.abi.json";
 function App() {
   const ERC20_DECIMALS = 18;
 
-  const contractAddress = "0x62C8178A2144BbD8676fc5994ecFE6F9A493f4Ee";
+  const contractAddress = "0x678289796f4336E7044EE73fA9916D587eafa156";
   const cUSDContractAddress = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1";
 
   const [usdBalance, setUsdBalance] = useState(0);
@@ -63,7 +63,9 @@ function App() {
 
   const listOfInvestments = async (props) => {
     try {
-      const investmentLength = await contract.methods.getInvestmentLength().call();
+      const investmentLength = await contract.methods
+        .getInvestmentLength()
+        .call();
       const _investments = [];
 
       for (let index = 0; index < investmentLength; index++) {
@@ -119,42 +121,46 @@ function App() {
       await cUSDContract.methods
         .approve(contractAddress, amount)
         .send({ from: address });
-      await contract.methods.invest(_name, _identification, _amount, _duration).send({from: address});
+      await contract.methods
+        .invest(_name, _identification, _amount, _duration)
+        .send({ from: address });
       listOfInvestments();
     } catch (error) {
       console.log(error);
     }
   };
 
-  const matureHandler = async (index)=>{
+  const matureHandler = async (index) => {
     console.log(index);
     try {
-      await contract.methods.isInvestmentMature(index).send({from: address});
+      await contract.methods.isInvestmentMature(index).send({ from: address });
       listOfInvestments();
     } catch (error) {
       console.log(error);
     }
-  
-  }
+  };
 
-  const payInvestment = async(investment)=>{
+  const payInvestment = async (investment) => {
     console.log("Pay");
     try {
-      const cUSDContract = new kit.web3.eth.Contract(IERC20, cUSDContractAddress);
-      const amount = new BigNumber(investment.amount + 10/100 * investment.amount)
-      .shiftedBy(ERC20_DECIMALS)
-      .toString();
-    await cUSDContract.methods
-      .approve(contractAddress, amount)
-      .send({ from: address });
-      await contract.methods.payInvestor(investment.index).send({from: address});
-      listOfInvestments()
+      const cUSDContract = new kit.web3.eth.Contract(
+        IERC20,
+        cUSDContractAddress
+      );
+      const amount = new BigNumber(10/100 + investment.amount * investment.amount)
+        .shiftedBy(ERC20_DECIMALS)
+        .toString();
+      await cUSDContract.methods
+        .approve(contractAddress, amount)
+        .send({ from: address });
+      await contract.methods
+        .payInvestor(investment.index)
+        .send({ from: address });
+      listOfInvestments();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
-  }
-
+  };
 
   useEffect(() => {
     connection();
@@ -171,14 +177,12 @@ function App() {
   useEffect(() => {
     if (contract) {
       listOfInvestments();
-      // isUserAdmin();
-      
+      isUserAdmin();
     }
   }, [contract]);
 
   useEffect(() => {
     if (contract) {
-      
     }
   }, []);
 
@@ -187,10 +191,16 @@ function App() {
       <Navbar balance={usdBalance} isAdmin={isAdmin} />
       <Switch>
         <Route exact path="/">
-          <Banner invest = {invest}/>
+          <Banner invest={invest} />
         </Route>
         <Route path="/admin">
-          {isAdmin && <MyAdmin investments={investments} matureHandler = {matureHandler} payInvestment = {payInvestment}/>}
+          {isAdmin && (
+            <MyAdmin
+              investments={investments}
+              matureHandler={matureHandler}
+              payInvestment={payInvestment}
+            />
+          )}
         </Route>
       </Switch>
       <MyInvestments investments={userInvestments} />

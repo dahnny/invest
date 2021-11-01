@@ -7,7 +7,7 @@ const Navbar = (props) => {
         <div className="container">
           <div className="main-responsive-menu">
             <div className="logo">
-              <a href="index-2.html">
+              <a href="">
                 <h1>CeloInvest</h1>
               </a>
             </div>

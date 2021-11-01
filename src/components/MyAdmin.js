@@ -21,7 +21,7 @@ const MyAdmin = (props) => {
                         <h3>{investment.name}</h3>
                       </div>
                       <div className="price">
-                        ${investment.amount} <span>m</span>
+                        ${investment.amount}
                       </div>
                       {!investment.isPaid ? <div className="pricing-btn">
                         <a onClick={investment.isMature? ()=>payInvestment(investment):()=>matureHandler(investment.index)} className="default-btn">
