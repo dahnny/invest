@@ -1,3 +1,5 @@
+CeloInvest is a decentralized investment platform. A user can keep his cUSD and receive a meaningful profit at the end of a particular period. All investments can be seen by the  admin. The admin can check if the investment has reached maturity and then it automatically informs the  admin to pay off investment with the profit included. This is also reflected on the user part of the dapp. This  dapp is to enable savings and make sure people use their cUSD wisely.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

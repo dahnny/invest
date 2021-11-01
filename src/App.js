@@ -181,10 +181,6 @@ function App() {
     }
   }, [contract]);
 
-  useEffect(() => {
-    if (contract) {
-    }
-  }, []);
 
   return (
     <Router>
